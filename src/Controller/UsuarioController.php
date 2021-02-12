@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Usuario;
-use App\Form\Type\RegistrarType;
+use App\Form\Type\UsuarioType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UsuarioController extends AbstractController
@@ -21,14 +21,14 @@ class UsuarioController extends AbstractController
     public function registrar(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
         $usuario = new Usuario();
-        $form = $this->createForm(UsuarioType::class, $usuario)
+        $form = $this->createFormBuilder($usuario)
                 ->add('email', TextType::class)
                 ->add('password', PasswordType::class)
                 ->add('nombre', TextType::class)
                 ->add('apellidos', TextType::class)
                 ->add('telefono', TextType::class)
-                ->add('registrar', SubmitType::class, ['label' => 'Registrar']);
-                
+                ->add('registrar', SubmitType::class, ['label' => 'Registrar'])
+                ->getForm();
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

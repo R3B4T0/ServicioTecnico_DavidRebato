@@ -68,7 +68,7 @@ body{
     font-size: 14px;
     margin-top: 13px;
 }
-.contraseña{
+.password{
     color: white;
     margin-top: 9px;
     font-size: 14px;
@@ -76,7 +76,7 @@ body{
     margin-left: 6px;
     margin-top: 9px;
 }
-#contraseña{
+#password{
 margin-top: 6px;
 }
 /*------------for phone Number--------*/
