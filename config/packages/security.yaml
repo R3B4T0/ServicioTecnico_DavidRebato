@@ -24,6 +24,7 @@ security:
             logout:
                 path: app_logout
                 # where to redirect after logout
+                target: inicio
                 # target: app_any_route
 
             # activate different ways to authenticate
@@ -35,5 +36,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        # - { path: ^/admin, roles: ROLE_ADMINISTRADOR }
+         - { path: ^/cliente, roles: ROLE_TECNICO }
+    
+    role_hierarchy:
+        ROLE_TECNICO: [ROLE_TECNICO]
+        ROLE_ADMINISTRADOR: [ROLE_ADMINISTRADOR]

@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+{% if app.user %}
+    Usuario {{app.user.username}}, <a href="{{ path('app_logout') }}">Cerrar Sesión</a>
+{% endif %}
+{% endblock %}

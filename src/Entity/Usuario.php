@@ -57,11 +57,6 @@ class Usuario implements UserInterface
     private $foto;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $rol;
-
-    /**
      * @ORM\OneToMany(targetEntity=Incidencia::class, mappedBy="id_usuario")
      */
     private $id_incidencia;

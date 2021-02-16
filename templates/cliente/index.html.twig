@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+{% if app.user %}
+    Usuario: <img src="imagenes/{{app.user.foto}}" height="50px"> {{app.user.username}}, <a href="{{ path('app_logout') }}">Cerrar Sesión</a>
+{% endif %}
+{% endblock %}

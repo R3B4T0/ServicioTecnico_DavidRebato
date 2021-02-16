@@ -16,20 +16,25 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form method="POST">
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Usuario">
-                            
+                            <input type="text" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Usuario">
                         </div>
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="password" class="form-control" placeholder="Contraseña">
+                            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Contraseña">
                         </div>
+                        <input type="hidden" name="_csrf_token"
+                                value="{{ csrf_token('authenticate') }}"
+                        >
                         <div class="row align-items-center remember">
                             <input type="checkbox">Recordar usuario
                         </div>

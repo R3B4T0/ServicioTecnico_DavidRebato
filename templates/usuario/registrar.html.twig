@@ -55,14 +55,36 @@
 			</div>
 		<!---For Password and confirm password-->
 			<div class="col-sm-12">
-					<div class="row">
-						<div class="col-xs-4">
-							<label class="pass">Contraseña :</label></div>
+				<div class="row">
+					<div class="col-xs-4">
+						<label class="pass">Contraseña :</label>
+					</div>
 					<div class="col-xs-8">
 						{{ form_row(form.password) }}
 					</div>
+				</div>
 			</div>
+			<!-- For Image --> 
+			<div class="col-sm-12">
+				<div class="row">
+					<div class="col-xs-4">
+						<label class="pass">Imagen :</label>
+					</div>
+					<div class="col-xs-8">
+						{{ form_row(form.foto) }}
+					</div>
+				</div>
 			</div>
+			<div class="col-sm-12">
+				<div class="row">
+					<div class="col-xs-4">
+						<label class="pass">Roles :</label>
+					</div>
+					<div class="col-xs-8">
+						{{ form_row(form.roles) }}
+					</div>
+				</div>
+			</div>	
 			
 		<!---For Phone number-->
 			<div class="col-sm-12">
@@ -75,7 +97,7 @@
 				</div>
 				{{ form_row(form.registrar, { 'label': 'Registrar' }) }}
 			</div>
-		</div>	 
+		</div>
 					
 			
 	</div>
