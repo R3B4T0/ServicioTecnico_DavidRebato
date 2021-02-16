@@ -48,6 +48,7 @@ class UsuarioController extends AbstractController
                 ])
                 ->add('roles', ChoiceType::class, array(
                     'attr' => array('class' => 'form-control',
+                    'type' => 'checkbox',
                     'style' => 'margin:5px 0;'),
                     'choices' =>
                     array
