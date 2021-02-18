@@ -13,6 +13,7 @@ class ClienteController extends AbstractController
 {
     /**
      * @Route("/cliente", name="cliente")
+     * @IsGranted("ROLE_TECNICO")
      */
     public function index(): Response
     {
@@ -56,6 +57,7 @@ class ClienteController extends AbstractController
 
      /**
      * @Route("/verCliente", name="verCliente")
+     * @IsGranted("ROLE_TECNICO")
      */
     public function verCliente(Cliente $cliente)
     {

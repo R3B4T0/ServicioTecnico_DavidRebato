@@ -15,6 +15,10 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            remember_me:
+                secret: '%secret%'
+                lifetime: 604800
+                path: /
             anonymous: true
             lazy: true
             provider: app_user_provider
@@ -26,6 +30,7 @@ security:
                 # where to redirect after logout
                 target: inicio
                 # target: app_any_route
+            switch_user: { role: ROLE_ADMINISTRADOR }
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -37,7 +42,8 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/usuario, roles: ROLE_ADMINISTRADOR }
-         - { path: ^/cliente, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/cliente, roles: ROLE_TECNICO }
+         - { path: ^/incidencias, roles: ROLE_TECNICO }
     
     role_hierarchy:
         ROLE_TECNICO: [ROLE_TECNICO]

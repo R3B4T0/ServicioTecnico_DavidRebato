@@ -44,6 +44,11 @@ class Incidencia
      */
     private $id_LineasDeIncidencia;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Cliente::class, inversedBy="incidencias")
+     */
+    private $cliente;
+
     public function __construct()
     {
         $this->id_LineasDeIncidencia = new ArrayCollection();
@@ -128,6 +133,18 @@ class Incidencia
                 $idLineasDeIncidencium->setIncidencia(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCliente(): ?Cliente
+    {
+        return $this->cliente;
+    }
+
+    public function setCliente(?Cliente $cliente): self
+    {
+        $this->cliente = $cliente;
 
         return $this;
     }

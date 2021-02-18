@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Constraints\File;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class UsuarioController extends AbstractController
 {
@@ -48,21 +49,21 @@ class UsuarioController extends AbstractController
                 ])
                 ->add('roles', ChoiceType::class, array(
                     'attr' => array('class' => 'form-control',
-                    'type' => 'checkbox',
-                    'style' => 'margin:5px 0;'),
+                    'style' => 'margin:10px 10px;'),
                     'choices' =>
                     array
                     (
                         'ROLE_ADMINISTRADOR' => array
                         (
-                            'Yes' => 'ROLE_ADMINISTRADOR',
+                            'Administrador'  => 'ROLE_ADMINISTRADOR',
                         ),
                         'ROLE_TECNICO' => array
                         (
-                            'Yes' => 'ROLE_TECNICO',
+                            'Técnico' => 'ROLE_TECNICO',
                         ),
                     ),
                     'multiple' => true,
+                    'expanded' => true,
                     'required' => true,
                 ))
                 ->add('registrar', SubmitType::class, ['label' => 'Registrar'])
@@ -96,5 +97,17 @@ class UsuarioController extends AbstractController
         return $this->render('usuario/registrar.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/usuarios", name="usuarios")
+     * @IsGranted("ROLE_ADMINISTRADOR")
+     */
+    public function usuarios(): Response
+    {
+        $repositorio = $this->getDoctrine()->getRepository(Usuario::class);
+        $usuarios = $repositorio->findAll();
+        return $this->render('usuario/usuarios.html.twig',
+                        ['usuarios' => $usuarios]);
     }
 }

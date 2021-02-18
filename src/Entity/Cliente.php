@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ClienteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,16 @@ class Cliente
      * @ORM\Column(type="string", length=200, nullable=true)
      */
     private $direccion;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Incidencia::class, mappedBy="cliente")
+     */
+    private $incidencias;
+
+    public function __construct()
+    {
+        $this->incidencias = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +98,36 @@ class Cliente
     public function setDireccion(?string $direccion): self
     {
         $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Incidencia[]
+     */
+    public function getIncidencias(): Collection
+    {
+        return $this->incidencias;
+    }
+
+    public function addIncidencia(Incidencia $incidencia): self
+    {
+        if (!$this->incidencias->contains($incidencia)) {
+            $this->incidencias[] = $incidencia;
+            $incidencia->setCliente($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIncidencia(Incidencia $incidencia): self
+    {
+        if ($this->incidencias->removeElement($incidencia)) {
+            // set the owning side to null (unless already changed)
+            if ($incidencia->getCliente() === $this) {
+                $incidencia->setCliente(null);
+            }
+        }
 
         return $this;
     }
