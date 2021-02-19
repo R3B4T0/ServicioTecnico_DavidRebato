@@ -43,7 +43,7 @@
                         Perfil
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#"><img src="imagenes/{{app.user.foto}}" height="50px">{{app.user.nombre}}</a>
+                            <a class="dropdown-item" href="#"><img src="imagenes/{{app.user.foto}}" height="50px"> {{app.user.nombre}} {{app.user.apellidos}}</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ path('app_logout') }}">Cerrar Sesión</a>
                         </div>

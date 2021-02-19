@@ -1,11 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Clientes{% endblock %}
-
-{% block stylesheets %}
-
-{% endblock %}
+{% block title %}Usuarios{% endblock %}
 
 {% block body %}
-    <h1>Clientes</h1>
+    <h1>Usuarios</h1>
+    {% for usuario in usuarios %}
+        <div class="usuario">
+            <h4><a href="{{  path('ver_usuario',{id:usuario.id}) }}">{{ usuario.nombre }}</a>
+                <a href="{{ path('borrar_usuario',{id:usuario.id}) }}">X</a></h4>
+                {%  if usuario.foto %}
+                    <img src="{{ asset('/imagenes/') }}/{{ usuario.foto }}" height="100">
+                {% endif %}
+        </div>
+    {% else %}
+        No hay ningún artículo a la venta
+    {% endfor %}
+    <div style="clear:both"></div>
+    {%  if app.user %}
+        <a href="{{ path('insertar_usuario') }}">Insertar usuario</a>
+    {% endif %}
 {% endblock %}

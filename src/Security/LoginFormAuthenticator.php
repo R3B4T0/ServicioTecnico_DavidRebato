@@ -4,7 +4,6 @@ namespace App\Security;
 
 use App\Entity\Usuario;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -21,9 +20,8 @@ use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticato
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 
-class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface, AuthenticationSuccessHandlerInterface
+class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
     use TargetPathTrait;
 
@@ -34,15 +32,15 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     private $csrfTokenManager;
     private $passwordEncoder;
     protected $router;
-    protected $security;
+    private $security;
 
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, Router $router)
+    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, Security $security)
     {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
-        $this->router = $router;
+        $this->security = $security;
     }
 
     public function supports(Request $request)
@@ -98,14 +96,14 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
-        $user = $this->Security::getToken()->getUser();
+        $user = $this->security->getToken()->getUser();
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
-        if($this->Security::isGranted('ROLE_ADMINISTRADOR')){
-            $response = new RedirectResponse($this->router->generate('usuarios'));
-        } else if ($this->Security::isGranted('ROLE_TECNICO')) {
-            $response = new RedirectResponse($this->router->generate('usuarios'));
+        if($this->security->isGranted('ROLE_ADMINISTRADOR')){
+            $response = new RedirectResponse($this->urlGenerator->generate('usuarios'));
+        } else if ($this->security->isGranted('ROLE_TECNICO')) {
+            $response = new RedirectResponse($this->urlGenerator->generate('cliente'));
         }
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));

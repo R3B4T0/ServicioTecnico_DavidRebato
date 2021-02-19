@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Usuarios{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Insertar Usuario</h4>
+            {{ form_start(form) }}
+                {{ form_row(form.nombre) }}
+                {{ form_row(form.apellidos) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.password) }}
+                {{ form_row(form.roles) }}
+                {{ form_row(form.telefono) }}
+                {{ form_row(form.foto) }}
+                {{ form_row(form.registrar, { 'label': 'Insertar usuario' }) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

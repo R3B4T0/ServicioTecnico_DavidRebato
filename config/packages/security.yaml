@@ -16,7 +16,7 @@ security:
             security: false
         main:
             remember_me:
-                secret: '%secret%'
+                secret: '%kernel.secret%'
                 lifetime: 604800
                 path: /
             anonymous: true
