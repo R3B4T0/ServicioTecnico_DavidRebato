@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comentario{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="card" style="color:pink; height:auto;">
+        <div class="card-header">
+            <h2>Insertar Comentario</h2>
+        </div>
+        <div class="card-body">
+            {{ form_start(form) }}
+                {{ form_row(form.texto)}}
+                {{ form_row(form.incidencia) }}
+                {{ form_row(form.insertar_comentario, { 'label': 'Insertar Comentario' }) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

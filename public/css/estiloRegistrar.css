@@ -23,7 +23,7 @@ body{
   box-shadow: 2px 5px 5px 0px #eee;
     max-width: 500px;
     padding-top: 10px;
-    height: 400px;
+    height: auto;
     margin-top: 166px;
 }
 /*--- for label of first and last name---*/

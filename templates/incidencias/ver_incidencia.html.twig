@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="card" style="color:white; height:auto;">
+        <div class="card-body">
+            <h4 class="card-title">Titulo</h4>
+            <p class="card-text">{{incidencia.titulo}}</p>
+            <h4 class="card-title">Estado</h4>
+            <p class="card-text">{{incidencia.estado}}</p>
+            <h4 class="card-title">Fecha</h4>
+            <p class="card-text">{{ incidencia.fechaCreacion|date('d-m-Y h:i:s') }}</p>
+            <a href="/cliente" class="btn btn-primary btn-block" role="button">Volver</a>
+        </div>
+    </div>
+    <h2 style="color:white;">Comentarios</h2>
+    {% for lineaIncidencia in incidencia.IdLineasDeIncidencia %}
+        <div class="card" style="color:pink; height:auto;">
+            <div class="card-body">
+                <p class="card-text">{{ lineaIncidencia.texto }} <a href="{{ path('borrar_comentario', {id:lineaIncidencia.id}) }}" class="btn btn-danger" role="button">Borrar comentario</a></p>
+            </div>
+        </div>
+    {% else %}
+        <p style="color:white;">No hay comentarios aún.</p>
+    {% endfor %}
+    {%  if app.user %}
+        <a href="{{ path('insertar_comentario') }}" class="btn btn-primary" role="button">Insertar Comentario</a>
+    {% endif %}
+{% endblock %}

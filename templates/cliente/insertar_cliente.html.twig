@@ -1,21 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Usuarios{% endblock %}
+{% block title %}Nuevo Cliente{% endblock %}
 
 {% block body %}
     {{ parent() }}
     <div class="card" style="height: auto; color: white;">
+        <div class="card-header">
+            <h2 class="card-title">Insertar Cliente</h2>
+        </div>
         <div class="card-body">
-            <h4 class="card-title">Insertar Usuario</h4>
             {{ form_start(form) }}
                 {{ form_row(form.nombre) }}
                 {{ form_row(form.apellidos) }}
-                {{ form_row(form.email) }}
-                {{ form_row(form.password) }}
-                {{ form_row(form.roles) }}
                 {{ form_row(form.telefono) }}
-                {{ form_row(form.foto) }}<br>
-                {{ form_row(form.registrar, { 'label': 'Insertar usuario' }) }}
+                {{ form_row(form.direccion) }}<br>
+                {{ form_row(form.insertar, { 'label': 'Insertar cliente' }) }}
             {{ form_end(form) }}
         </div>
     </div>

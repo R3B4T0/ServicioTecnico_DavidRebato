@@ -1,9 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Clientes{% endblock %}
 
 {% block body %}
-{% if app.user %}
-    Usuario: <img src="imagenes/{{app.user.foto}}" height="50px"> {{app.user.username}}, <a href="{{ path('app_logout') }}">Cerrar Sesión</a>
-{% endif %}
+    {{ parent() }}
+    <h1 style="color:white;">Clientes</h1>
+    {% for cliente in clientes %}
+        <div class="card" style="color:white; height:auto;">
+            <div class="card-body">
+                <h4 class="card-title">Cliente {{cliente.id}}</h4>
+                <p class="card-text"><a href="{{  path('verCliente',{id:cliente.id}) }}">{{ cliente.nombre }}</a>
+                    <a href="{{ path('borrarCliente',{id:cliente.id}) }}" class="btn btn-danger" role="button">Borrar cliente</a></h4>
+                </p>
+            </div>
+        </div>
+    {% else %}
+        No se ha encontrado ningún cliente.
+    {% endfor %}
+    <div style="clear:both"></div>
+    {%  if app.user %}
+        <a href="{{ path('nuevoCliente') }}" class="btn btn-primary" role="button">Insertar cliente</a>
+    {% endif %}
 {% endblock %}

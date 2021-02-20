@@ -66,7 +66,10 @@ class UsuarioController extends AbstractController
                     'expanded' => true,
                     'required' => true,
                 ))
-                ->add('registrar', SubmitType::class, ['label' => 'Registrar'])
+                ->add('registrar', SubmitType::class, 
+                array(
+                    'attr' => array('class' => 'btn btn-primary btn-block', 'label' => 'Registrar')
+                ))
                 ->getForm();
 
         $form->handleRequest($request);
@@ -90,6 +93,10 @@ class UsuarioController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($usuario);
             $em->flush();
+            $this->addFlash(
+                'notice',
+                'Usuario registrado correctamente!'
+            );
 
             return $this->redirectToRoute('inicio');
         }
@@ -112,13 +119,12 @@ class UsuarioController extends AbstractController
     }
 
     /**
-     * @Route("/usuarios/ver_usuario", name="ver_usuario")
+     * @Route("/usuarios/ver_usuario/{id}", name="ver_usuario", requirements={"id"="\d+"})
      * @IsGranted("ROLE_ADMINISTRADOR")
+     * @param int $id
      */
     public function ver_usuario(Usuario $usuario): Response
     {
-        /*$repositorio = $this->getDoctrine()->getRepository(Usuario::class);
-        $usuario = $repositorio->find($id);*/
         return $this->render('usuario/ver_usuario.html.twig',
                         ['usuario' => $usuario]);
     }
@@ -126,12 +132,17 @@ class UsuarioController extends AbstractController
     /**
      * @Route("/usuarios/borrar/{id}", name="borrar_usuario")
      * @return Response
+     * @IsGranted("ROLE_ADMINISTRADOR")
      */
     public function borrar_usuario(Usuario $usuario): Response 
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($usuario);
         $em->flush();
+        $this->addFlash(
+            'error',
+            'Usuario borrado correctamente'
+        );
         return $this->redirectToRoute('usuarios');
     }
 
@@ -182,7 +193,11 @@ class UsuarioController extends AbstractController
                     'expanded' => true,
                     'required' => true,
                 ))
-                ->add('registrar', SubmitType::class, ['label' => 'Registrar'])
+                ->add('registrar', SubmitType::class, 
+                    array(
+                        'attr' => array('class' => 'btn btn-primary btn-block', 'label' => 'Insertar usuario')
+                    )
+                )
                 ->getForm();
 
         $form->handleRequest($request);
@@ -206,6 +221,10 @@ class UsuarioController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($usuario);
             $em->flush();
+            $this->addFlash(
+                'notice',
+                'Usuario insertador correctamente'
+            );
 
             return $this->redirectToRoute('usuarios');
         }
