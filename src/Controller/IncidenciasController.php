@@ -40,7 +40,6 @@ class IncidenciasController extends AbstractController
         $form = $this->createFormBuilder($incidencia)
                 ->add('titulo', TextType::class,)
                 ->add('cliente', EntityType::class, ['class' => Cliente::class, 'choice_label' => 'nombre'])
-                ->add('id_usuario', EntityType::class, ['class' => Usuario::class, 'choice_label' => 'email'])
                 ->add('estado', ChoiceType::class, [
                     'choices' =>
                     [
@@ -60,6 +59,47 @@ class IncidenciasController extends AbstractController
             $incidencia = $form->getData();
             //Guardamos el nuevo artículo en la base de datos
             $em = $this->getDoctrine()->getManager();
+            $incidencia->setIdUsuario($this->getUser());
+            $em->persist($incidencia);
+            $em->flush();
+
+            return $this->redirectToRoute('incidencias');
+        }
+        return $this->render('incidencias/insertar_incidencia2.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+    
+    /**
+     * @Route("/incidencias/insertar/cliente/{id}", name="insertar_incidencia_cliente")
+     * IsGranted("ROLE_TECNICO")
+     */
+    public function insertar_incidencia_cliente(Request $request, Cliente $cliente): Response
+    {
+        $incidencia = new Incidencia();
+        $form = $this->createFormBuilder($incidencia)
+                ->add('titulo', TextType::class,)
+                ->add('estado', ChoiceType::class, [
+                    'choices' =>
+                    [
+                        'Iniciada' => 'INICIADA',
+                        'En Proceso' => 'EN_PROCESO',
+                        'Resuelta' => 'RESUELTA',
+                    ],
+                ])
+                ->add('insertar_incidencia', SubmitType::class, 
+                        array(
+                            'attr' => array('class' => 'btn btn-primary btn-block', 'label' => 'Insertar incidencia')
+                        ))
+                ->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $incidencia = $form->getData();
+            //Guardamos el nuevo artículo en la base de datos
+            $em = $this->getDoctrine()->getManager();
+            $incidencia->setIdUsuario($this->getUser());
+            $incidencia->setCliente($cliente);
             $em->persist($incidencia);
             $em->flush();
 

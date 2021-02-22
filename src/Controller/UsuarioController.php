@@ -29,7 +29,7 @@ class UsuarioController extends AbstractController
         $usuario = new Usuario();
         $form = $this->createFormBuilder($usuario)
                 ->add('email', TextType::class)
-                ->add('password', PasswordType::class)
+                ->add('password', PasswordType::class, ['attr' => ['minLength' => 4]])
                 ->add('nombre', TextType::class)
                 ->add('apellidos', TextType::class)
                 ->add('telefono', TextType::class)

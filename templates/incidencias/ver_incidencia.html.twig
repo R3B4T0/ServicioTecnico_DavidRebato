@@ -14,15 +14,16 @@
         </div>
     </div>
     <h2 style="color:white;">Comentarios</h2>
-    {% for lineaIncidencia in incidencia.IdLineasDeIncidencia %}
+    
         <div class="card" style="color:pink; height:auto;">
             <div class="card-body">
-                <p class="card-text">{{ lineaIncidencia.texto }} <a href="{{ path('borrar_comentario', {id:lineaIncidencia.id}) }}" class="btn btn-danger" role="button">Borrar comentario</a></p>
+                {% for lineaIncidencia in incidencia.IdLineasDeIncidencia %}
+                    <p class="card-text">{{ lineaIncidencia.texto }} <a href="{{ path('borrar_comentario', {id:lineaIncidencia.id}) }}" class="btn btn-danger" role="button">Borrar comentario</a></p>
+                {% else %}
+                    <p style="color:white;">No hay comentarios aún.</p>
+                {% endfor %}
             </div>
-        </div>
-    {% else %}
-        <p style="color:white;">No hay comentarios aún.</p>
-    {% endfor %}
+        </div><br>
     {%  if app.user %}
         <a href="{{ path('insertar_comentario') }}" class="btn btn-primary" role="button">Insertar Comentario</a>
     {% endif %}

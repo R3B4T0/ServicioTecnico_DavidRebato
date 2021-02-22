@@ -16,14 +16,15 @@
         </div>
     </div>
     <h2 style="color:white;">Incidencias</h2>
-    {% for incidencia in cliente.incidencias %}
-        <ul class="list-group card">
-            <li class="list-group-item">
-                <p><a href="{{ path('ver_incidencia', {id:incidencia.id}) }}">{{incidencia.titulo}}</a>  <a href="{{ path('borrar_incidencia', {id:incidencia.id}) }}" class="btn btn-danger">Borrar Incidencia</a></p>
-            </li>
-        </ul><br>
-    {% else %}
-        <p style="color:white;">No hay incidencias aún.</p>
-    {% endfor %}
-    <a href="{{ path('insertar_incidencia', {id:cliente.id}) }}" class="btn btn-primary">Insertar incidencia</a>
+    <div class="card" style="height: auto;">
+        <div class="card-body">
+            {% for incidencia in cliente.incidencias %}
+            <h4 class="card-title"><a href="{{ path('ver_incidencia', {id:incidencia.id}) }}">{{incidencia.titulo}}</a></h4>
+            <p class="card-text"><a href="{{ path('borrar_incidencia', {id:incidencia.id}) }}" class="btn btn-danger">Borrar Incidencia</a></p>
+            {% else %}
+                <p style="color:white;">No hay incidencias aún.</p>
+            {% endfor %}
+        </div>
+    </div>
+    <a href="{{ path('insertar_incidencia_cliente', {id:cliente.id}) }}" class="btn btn-primary">Insertar incidencia</a>
 {% endblock %}
