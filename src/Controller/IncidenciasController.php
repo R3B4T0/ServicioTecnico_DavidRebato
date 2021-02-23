@@ -136,15 +136,14 @@ class IncidenciasController extends AbstractController
     }
 
     /**
-     * @Route("/insertar_comentario/", name="insertar_comentario")
+     * @Route("/insertar_comentario/{id}", name="insertar_comentario")
      * @IsGranted("ROLE_TECNICO")
      */
-    public function insertar_comentario(Request $request): Response
+    public function insertar_comentario(Request $request, Incidencia $incidencia): Response
     {
         $lineaIncidencia = new LineasDeIncidencia();
         $form = $this->createFormBuilder($lineaIncidencia)
                 ->add('texto', TextType::class,)
-                ->add('incidencia', EntityType::class, ['class' => Incidencia::class, 'choice_label' => 'titulo'])
                 ->add('insertar_comentario', SubmitType::class, 
                         array(
                             'attr' => array('class' => 'btn btn-primary btn-block', 'label' => 'Insertar comentario')
@@ -156,6 +155,7 @@ class IncidenciasController extends AbstractController
             $lineaIncidencia = $form->getData();
             //Guardamos el nuevo artículo en la base de datos
             $em = $this->getDoctrine()->getManager();
+            $lineaIncidencia->setIncidencia($incidencia);
             $em->persist($lineaIncidencia);
             $em->flush();
 

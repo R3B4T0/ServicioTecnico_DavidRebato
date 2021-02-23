@@ -25,6 +25,6 @@
             </div>
         </div><br>
     {%  if app.user %}
-        <a href="{{ path('insertar_comentario') }}" class="btn btn-primary" role="button">Insertar Comentario</a>
+        <a href="{{ path('insertar_comentario', {id:incidencia.id}) }}" class="btn btn-primary" role="button">Insertar Comentario</a>
     {% endif %}
 {% endblock %}
